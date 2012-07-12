@@ -1,0 +1,182 @@
+{% extends "base.html" %}
+
+{% block title %}Comment Page{% endblock %}
+
+ 
+{% block extra_style %}
+    #latest{
+        border:1px dashed black;
+        text-align: center;
+        overflow:auto;
+        height:100%;
+        
+       
+    }
+    
+    #details{
+        
+        margin:20px auto;
+        width:80%;
+        line-height: 20px;
+        
+    }
+    #do_comment{
+        width:30%;
+        margin-left:0px;
+    }
+    
+    #post_id{
+        border:1px solid black;
+        width:30%;
+       float: left;
+    }
+    
+    #post_title{
+        border:1px solid black;
+        width:65%;
+        float: left;
+        margin-left: 10px;
+    }
+    
+    #clear_float{
+       clear: both;
+       line-height: 10px;
+       padding: 10px; 
+    }
+    
+    /*#content{
+       border:3px solid black;
+       text-align: center;
+       height:100%;
+       background-color:#aaa; 
+    }*/
+    #desc{
+        border:1px solid black;
+        width:100%;
+        text-align: center;
+        padding: 1%;
+        
+    }
+    
+    #do_comment{
+        text-align: center; 
+        padding: 1px;
+        text-align:left;
+        
+    }
+    #cmt_txt{
+        float:left;
+        width:20%;
+        text-align:left;
+    }
+    
+    #login{
+        float:left;
+        width:100%;
+        text-align:center;
+    }
+    #cmt_desc{
+        float:left;
+        width:20%;
+        text-align:left;
+    }
+    #comment_title{
+        width:60%;
+        float:left;
+    }
+    
+    #comment_description{
+       width:60%;
+       float:left;
+    }
+    
+    
+    #submit_btn{
+       text-align: center;
+       padding: 2px; 
+    }
+    
+    #go_home{
+        margin-bottom:50px;
+    }
+    #comments{
+        margin-left:0;
+        width:20%;
+       
+    }
+    
+    .c_title{
+        margin-left:5px;
+        float:left;
+        text-align:left;
+    }
+    
+    .c_desc{
+        margin-left:10px;
+        width:90%;
+        text-align:justify;
+    }
+    .clear{
+        clear:both;
+    }
+{% endblock %}
+
+{% block header_text %}Add Comment for a Latest Post{% endblock %}
+
+{% block content %}
+{% if latest_post %}
+     
+     <div id="latest">
+        
+        {% csrf_token %}
+                    
+             <div id="details">
+                   
+                    <div id="post_id"> Post{{latest_post.id}}:</div><div id="post_title">{{latest_post.title}}</div>
+                    <div id="clear_float"></div>
+                    <div id="desc">{{latest_post.description}}</div>
+            </div>
+             
+        
+        <div id="do_comment"><h4>Do Comment:</h4></div>
+        {% if user.is_authenticated %}
+            <form name="comment_form" action="." method="post" >
+                <div id="cmt_txt">Title</div><div id="comment_title"><input type="text" name="c_title" value=""></div>
+                <div class="clear"></div>
+                <div id="cmt_desc">Description</div><div id="comment_description"><textarea name="c_desc" value=""></textarea></div>
+                <div class="clear"></div>
+                <div id="submit_btn"><input type="submit" value="Comment" name="comment"></div>
+            </form>
+        {% else %}
+            <div id="login"><b>Please Login to do comment!!</b></div>
+        {% endif %}
+        <div id="go_home"><a href="{% url index %}">Home</a></div>
+        
+        <div class="comment_block">
+        <div id="comments">Comments:</div>
+        {% if comments %}
+            {% for com in comments %}
+                <hr>
+                <div class="c_title"><h5>{{com.title}}</h5><h6>[User:{{com.user}}]</h6></div>
+                <div class="clear"></div>
+                <div class="c_desc">{{com.description}}</div>
+                <div class="clear"></div>
+            {% endfor %}
+        </div>
+            
+        {%else%}
+            <p>No comments are available</p>
+        {% endif %}
+                
+        
+   
+   
+    
+{% else %}
+    <p>No Posts are available to Comment.</p>
+{% endif %}
+
+     </div>
+
+
+{% endblock %}

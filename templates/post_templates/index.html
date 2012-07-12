@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% block title %}Index Page{% endblock %}
+
+{%block extra_style%}    
+        
+       h1{
+            text-align: center;
+       }
+       .link{
+            border:1px solid black;line-height:35px;margin:20px 10px 10px 20px;background-color:#eee;
+       }
+       #link_content{
+            
+            
+            border:1px solid black;margin:0 auto;width:100%;text-align: center;background-image:-webkit-gradient(radial, center center, 0, center center, 505, color-stop(0, #777777), color-stop(1, #FFFFFF));
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;
+          
+            -moz-box-shadow:inset 0 0 10px #000000;
+            -webkit-box-shadow:inset 0 0 10px #000000;
+             box-shadow:inset 0 0 10px #000000;
+        }
+       
+       
+       #post_content{
+            text-align:center;
+       }
+       
+       .post_id{
+            
+            width:30%;
+            float: left;
+        }
+        
+        .post_title{
+            
+            width:65%;
+            float: left;
+            margin-left: 10px;
+            text-align:center;
+        }
+        .clear_float{
+           clear: both;           
+           padding: 5px; 
+        }
+        
+        #user{
+            float:right;
+            width:20%;
+            
+   
+        }
+        #post_5{
+            display: none;
+        }
+        
+        
+        
+        
+        
+       
+    
+{% endblock %}
+
+{% block jquery %}
+    
+    $('#latest').bind('fade-cycle', function() {
+            $(this).fadeIn('1000', function() {
+                $(this).fadeOut('1000', function() {
+                    $(this).trigger('fade-cycle');
+            });
+            });
+    });
+            
+    $('#latest').click(function(){
+        $('#post_5').slideToggle('slow');
+                
+    });
+            
+{% endblock %}
+
+
+{% block header_text %}
+    <h1>Post Blog</h1>
+
+{% endblock %}
+<br>
+{% block content %}
+<div id="link_content">
+
+{% if user.is_authenticated %}
+<div class="link"><a href="{% url addpost %}">ADD POST</a></div>
+<div class="link"><a href="{% url viewpost %}">VIEW POST</a></div>
+{% else %}
+<div class="link"><a href="{% url viewpost %}">VIEW POST</a></div>  
+{% endif %}
+{#<div class="link"><a href="{% url comment %}">DO COMMENT</a></div>#}
+</div>
+
+<div id="post_content">
+        
+    <h2><center><div id="latest" ><a href="#">Latest 5 Posts</a></div></center></h2><hr>
+
+{% if latest_5post %}
+    <div id="post_5">
+    {% for post in latest_5post %}        
+        <div class="post_id"> Post:{{post.id}}:</div><div class="post_title"><a href="{% url comment post.id %}">{{post.title}}</a></div>
+        <div class="clear_float"></div>
+    {% endfor %}
+    </div>
+{% else %}
+    <p>No Posts are available</p>
+{% endif %}
+        
+</div>
+
+
+{% endblock %}

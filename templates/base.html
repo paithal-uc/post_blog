@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Sample Blog{% block title %}{% endblock %}</title>
+        <style type="text/css">
+            html, body{
+                width: 100%;
+            }
+            body{
+                background-image: -webkit-gradient(radial, center center, 0, center center, 505, color-stop(0, #FFFFFF), color-stop(1, #AAAAAA));
+                background-image: -moz-linear-gradient(radial, center center, 0, center center, 505, color-stop(0, #FFFFFF), color-stop(1, #AAAAAA));
+            }
+            #top{
+                width: 99%;
+            }
+            #header{
+                width: 100%;
+                margin: 0 auto;
+                height: 70px;
+            }
+            #content{
+                               
+                margin-top: 500px;
+                width: 450px;
+                margin: 0 auto;
+                
+            }
+            .clear{
+                clear: both;
+            }
+            
+            #user{
+                float:right;
+            }
+        {% block extra_style %}
+        
+        {% endblock %}
+        </style>
+        
+        
+        <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-1.7.2.min.js"></script>
+
+        <script type="text/javascript">
+        $(document).ready(function(){        
+            
+            {% block jquery %}
+
+            {% endblock %}
+           
+         });
+        </script>
+         
+        {% block extra_head %}
+        
+        {% endblock %}
+    </head>
+    <body>
+        <div id="top">
+            <div id="header">
+                <center>
+                <h1>{% block header_text %}{% endblock %}</h1>
+                </center>
+                {% if user.is_authenticated %}
+                <div id="user">You are Logged in as <b>{{ user }}</b></div>
+                {% else %}
+                <div id="user">You are Not Logged in!!</div>
+            {% endif %}
+            <div class="clear"></div>
+            <hr>
+            </div>
+            <br><br>
+            <div id="content">
+                {% block content %}
+                    
+                {% endblock %}
+           
+            </div>
+             <hr>
+        </div>
+    </body>
+</html>
+
+

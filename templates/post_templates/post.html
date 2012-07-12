@@ -1,0 +1,101 @@
+{% extends "base.html"%}
+{% block title %}Add Post{% endblock %}
+
+{% block extra_style %}
+        
+           
+           /* #post{
+                border:1px double black; text-align: center;margin-bottom: 10%;
+            }*/
+            #addpost{
+                margin-left: 40%;
+            }
+            #p_title{
+                border:1px solid dotted;width:20%;float:left;padding:1%;margin:0 auto;
+            }
+            input.input_style{
+               width:auto;float:left;
+               
+               border: 1px solid #DDDDDD;
+               height:15px; 
+              
+               padding: 5px;
+               background: #ffffff;   
+               -moz-border-radius: 5px;
+               border-radius:5px;   
+               -webkit-border-radius: 5px;
+            }
+            
+            input.input_style:focus{
+               border: 2px solid #50cff1;
+               box-shadow: 2px 1px 1px 2px #000;
+            }
+            
+            .clear{
+                clear:both;
+            }
+            #p_desc{
+                border:1px solid dotted;width:20%;float: left;padding:1%;margin:0 auto;
+            }
+            textarea.text_style{
+                width:auto;float: left;
+                
+                border: 1px solid #DDDDDD;
+               
+              
+                padding: 5px;
+                background: #ffffff;   
+                -moz-border-radius: 5px;
+                border-radius:5px;   
+               -webkit-border-radius: 5px;
+            }
+            
+            
+            textarea.text_style:focus{
+               border: 2px solid #50cff1;
+               box-shadow: 2px 1px 1px 2px #000;
+            }
+            .clear{
+                clear:both;
+                padding:5px;
+            }
+            .submit_class{
+                margin:20px auto;padding:1%;
+            }
+            #content_post{
+                margin: auto;
+            }
+            #go_home{
+            text-align: center;
+            }
+            
+            #login{
+                text-align:center;
+            }
+            
+ {% endblock %}           
+     
+    
+     {% block header_text %}Leave a POST{% endblock%}
+     
+     {% block content %}
+         
+         {% if user.is_authenticated %}
+         
+        <form name="addpost" action="{% url addpost %}" method="post">
+            {% csrf_token %}
+            <div id="content_post">
+            <div id="p_title"> Post Title:</div><input type=text name="title" value="" class="input_style">
+            <div class="clear"></div>
+            <div id="p_desc">Post Description</div><textarea name="desc" value="" rows="5" cols="20" class="text_style"></textarea>
+            <div class="clear"></div>
+            <input type="submit" name="post" value="POST" class="submit_class">
+            </div>
+        </form>
+        {% else %}
+        <div id="login">Please Login to Add a Post</div>
+        {% endif %}
+        
+    
+    <div id="go_home"><a href="{% url index %}">Home</a></div>
+ {% endblock %}
