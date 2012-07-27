@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %}Index Page{% endblock %}
 
-{%block extra_style%}    
+{% block extra_style %}    
         
        h1{
             text-align: center;
@@ -55,7 +55,21 @@
             display: none;
         }
         
+        a{
+        text-decoration:none;
+        }
+        .box {
+        background: #2f2f2f;
+        color: #0099ff;
+        display: block;
         
+       
+        text-align: center;
+        width: 100%;
+        -moz-box-shadow: 0px 0px 15px #0099ff;
+        -webkit-box-shadow: 0px 0px 15px #0099ff;
+        box-shadow: 0px 0px 15px #0099ff;
+}
         
         
         
@@ -82,14 +96,16 @@
 
 
 {% block header_text %}
-    <h1>Post Blog</h1>
+    <h1 class="box">Post Blog</h1>
 
 {% endblock %}
+
 <br>
 {% block content %}
 <div id="link_content">
 
 {% if user.is_authenticated %}
+    
 <div class="link"><a href="{% url addpost %}">ADD POST</a></div>
 <div class="link"><a href="{% url viewpost %}">VIEW POST</a></div>
 {% else %}

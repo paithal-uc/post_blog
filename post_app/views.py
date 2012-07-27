@@ -4,8 +4,10 @@
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from post_app.models import defendant_potential
+from post_app.models import Post,Comment
 from django.template import Context,loader
+from django.contrib.auth import authenticate, login, logout
+
 
 def home(request):
      return HttpResponse("Hello, world. You're at the poll index.")
@@ -17,6 +19,28 @@ def index(request):
         'latest_5post':latest,
     }
     return render_to_response('post_templates/index.html',context,context_instance=RequestContext(request))
+    
+def login(request):
+    if request.method=="POST":
+        uname=request.POST['uid']
+        pwd=request.POST['pwd']
+    
+        user=authenticate(username=uname,password=pwd)
+        if user is not None:
+            if user.is_active:
+                login(request,user)
+                context={msg:"You are Logged in"}
+                #render_to_response('post_templates/login.html',{msg:"You are Logged in"},context_instance=RequestContext(request))
+                render_to_response('post_templates/success.html',context,context_instance=RequestContext(request))
+            else:
+                #render_to_response('post_templates/login.html',{msg:"Your account is inactive"},context_instance=RequestContext(request))
+                context={msg:"You are not Logged in"}
+                render_to_response('post_templates/success.html',context,context_instance=RequestContext(request))
+            
+    return render_to_response('post_templates/success.html',{"msg":"Your account is inactive"},context_instance=RequestContext(request))
+    
+    
+    
      
 def viewpost(request):
     latest_post = Post.objects.all().order_by('-pub_date')[:5]
@@ -71,3 +95,6 @@ def addpost(request):
         post.save()
         return viewpost(request)
     return render_to_response('post_templates/post.html',context,context_instance=RequestContext(request))
+
+def logout_view(request):
+    logout(request)

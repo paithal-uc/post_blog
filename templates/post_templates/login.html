@@ -1,0 +1,95 @@
+{% extends "base.html"%}
+{% block title %}Login{% endblock %}
+
+{% block extra_style %}
+        
+           
+           
+           
+            #uid{
+                border:1px solid dotted;width:20%;float:left;padding:1%;margin:0 auto;
+            }
+            #uid_text{
+               width:auto;float:left;
+               
+               border: 1px solid #DDDDDD;
+               height:15px; 
+              
+               padding: 5px;
+               background: #ffffff;   
+               -moz-border-radius: 5px;
+               border-radius:5px;   
+               -webkit-border-radius: 5px;
+            }
+            
+            #uid_text:focus{
+               border: 2px solid #50cff1;
+               box-shadow: 2px 1px 1px 2px #000;
+            }
+            
+            .clear{
+                clear:both;
+            }
+            #pwd{
+                border:1px solid dotted;width:20%;float: left;padding:1%;margin:0 auto;
+            }
+            #pwd_text{
+                width:auto;float: left;
+                
+                border: 1px solid #DDDDDD;
+               
+              
+                padding: 5px;
+                background: #ffffff;   
+                -moz-border-radius: 5px;
+                border-radius:5px;   
+               -webkit-border-radius: 5px;
+            }
+            
+            
+            #pwd_text:focus{
+               border: 2px solid #50cff1;
+               box-shadow: 2px 1px 1px 2px #000;
+            }
+            .clear{
+                clear:both;
+                padding:5px;
+            }
+            .submit_class{
+                margin:20px auto;padding:1%;
+            }
+            #content_login{
+                margin: auto;
+            }
+            #go_home{
+            text-align: center;
+            }
+            
+            #login{
+                text-align:center;
+            }
+            
+ {% endblock %}           
+     
+    
+     {% block header_text %}User Login{% endblock%}
+     
+     {% block content %}
+         
+         
+         
+        <form name="login" action="{% url login %}" method="post">
+            {% csrf_token %}
+            <div id="content_login">
+            <div id="uid">UserID:</div><input type=text name="uid" value="" id="uid_text">
+            <div class="clear"></div>
+            <div id="pwd">Password</div><input type=text name="pwd" value="" id="pwd_text">
+            <div class="clear"></div>
+            <input type="submit" name="login" value="Login" class="submit_class">
+            </div>
+        </form>
+       
+        
+    
+    <div id="go_home"><a href="{% url index %}">Home</a></div>
+ {% endblock %}

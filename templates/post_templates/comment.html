@@ -141,6 +141,7 @@
         <div id="do_comment"><h4>Do Comment:</h4></div>
         {% if user.is_authenticated %}
             <form name="comment_form" action="." method="post" >
+                {% csrf_token %}
                 <div id="cmt_txt">Title</div><div id="comment_title"><input type="text" name="c_title" value=""></div>
                 <div class="clear"></div>
                 <div id="cmt_desc">Description</div><div id="comment_description"><textarea name="c_desc" value=""></textarea></div>
